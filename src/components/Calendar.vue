@@ -33,8 +33,9 @@ export default {
 				events: [
                     {
                         id: '1',
-                        title: 'event1',
-                        start: '2021-08-01',
+                        title: 'A社　会議',
+                        start: '2021-08-31 19:00',
+												end:'2021-08-31 19:30',
                         url: '#'
                     }
                 ],
@@ -45,16 +46,24 @@ export default {
 	methods: {
     handleDateClick: function(arg) {
 			this.$router.push({
-      name: 'Edit',
+      name: 'Register',
       params: {
         date: arg.dateStr,
       },
     });
 		console.log("カレンダー画面"+arg.dateStr)
     },
-		handleEventClick: function(arg) {
-
-			alert('イベントクリック! ' + arg.dateStr)
+		handleEventClick: function(info) {
+		
+			this.$router.push({
+      name: 'Edit',
+      params: {
+				id:info.event.id,
+				title: info.event.title,
+        start: info.event.start,
+				end: info.event.end,
+      },
+    });
     }
 	}
 };

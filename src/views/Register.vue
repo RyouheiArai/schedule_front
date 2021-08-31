@@ -25,11 +25,9 @@
       <input type="time" name="scheduleEndTime" v-model="scheduleEndTime" value size="40" />
     </p>
 
-    <!-- 変更ボタン -->
-    <button v-on:click="doChangeschedule" v-bind:disabled="!isEntered">変更</button>
-		<!-- 削除ボタン -->
-    <button v-on:click="doDeleteschedule">削除</button>
-
+    <!-- 追加ボタン -->
+    <button v-on:click="doAddschedule" v-bind:disabled="!isEntered">登録</button>
+    <!-- 水平線 -->
     <hr />
   </div>
 </template>
@@ -43,8 +41,6 @@ export default {
   // data オブジェクトのプロパティの値を変更すると、ビューが反応し、新しい値に一致するように更新
   data() {
     return {
-      // スケジュールID
-      schedulesId: "",
       // スケジュール名
       scheduleName: "",
       // 日付
@@ -72,42 +68,27 @@ export default {
   },
 	created() {
 		// 日付をカレンダーのクリックした日付から受け取る
-		if(this.$route.params.id != null){
-			var startDate = this.$route.params.start;
-			var endDate = this.$route.params.end;
-
-			// 開始日付取得
-			var startYear = startDate.getFullYear();
-			var startMonth = ("0"+(startDate.getMonth() + 1)).slice(-2);
-			var startDay =  ("0"+startDate.getDate()).slice(-2);
-			// 開始時間取得
-			var startHour =  ("0"+startDate.getHours()).slice(-2);
-			var startMinute = ("0"+startDate.getMinutes()).slice(-2);
-			// 終了時間取得
-			var endHour = ("0"+endDate.getHours()).slice(-2);
-			var endMinute = ("0"+endDate.getMinutes()).slice(-2);
-
-			this.schedulesId = this.$route.params.id;
-			this.scheduleName = this.$route.params.title;
-			this.scheduleDay = startYear + '-' + startMonth + '-' + startDay;
-			this.scheduleStartTime = startHour + ':' + startMinute;
-			this.scheduleEndTime =  endHour + ':' + endMinute;
-
-			console.log(this.scheduleStartTime);
+		if(this.$route.params.date != null){
+			this.scheduleDate = this.$route.params.date.toString();
+		} else{
+			var now = new Date();
+			var year = now.getFullYear();
+			var month = ("0"+(now.getMonth() + 1)).slice(-2);
+			var day =  ("0"+now.getDate()).slice(-2);
+			this.scheduleDay = year + '-' + month + '-' + day;
 		} 
   },
   methods: {
     handleDateClick: function (arg) {
       alert("date click! " + arg.dateStr);
     },
-    // スケジュールを変更する
-    doChangeschedule() {
+    // スケジュールを登録する
+    doAddschedule() {
       var scheduleSeconds = ":00";
       var space = " ";
 
       // サーバへ送信するパラメータ
       const params = new URLSearchParams();
-			params.append("scheduleId", this.schedulesId);
       params.append("scheduleName", this.scheduleName);
       params.append("scheduleMemo", this.scheduleMemo);
       params.append(
@@ -119,24 +100,20 @@ export default {
         this.scheduleDay + space + this.scheduleEndTime + scheduleSeconds
       );
 
-      this.axios.post("/changeschedule", params).then((response) => {
+      this.axios.post("/addschedule", params).then((response) => {
         if (response.status != 200) {
           throw new Error("レスポンスエラー");
-        } 
+        } else {
+          // 入力値を初期化する
+          this.initInputValue();
+        }
       });
     },
-		// スケジュールを削除する
-    doDeleteschedule() {
-
-      // サーバへ送信するパラメータ
-      const params = new URLSearchParams();
-			params.append("scheduleId", this.schedulesId);
-
-      this.axios.post("/deleteschedule", params).then((response) => {
-        if (response.status != 200) {
-          throw new Error("レスポンスエラー");
-        } 
-      });
+    // 入力値を初期化する
+    initInputValue() {
+      this.current = -1;
+      this.scheduleName = "";
+      this.scheduleMemo = "";
     },
   },
 };
