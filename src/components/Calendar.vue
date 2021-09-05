@@ -14,9 +14,6 @@ export default {
     FullCalendar, // make the <FullCalendar> tag available
   },
   data() {
-    // カレンダーデータ取得
-    var events = this.doFetchAllschedules;
-
     return {
       calendarOptions: {
         dateClick: this.handleDateClick, //日付クリック
@@ -25,7 +22,7 @@ export default {
         headerToolbar: {
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
         navLinks: true,
         businessHours: true,
@@ -33,19 +30,18 @@ export default {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
         initialView: "dayGridMonth",
         locale: jaLocale, // 日本語化
-        events: events,
+        events: this.doFetchAllschedules(),
       },
     };
   },
   methods: {
-    handleDateClick: function (arg) {
+    handleDateClick: function (info) {
       this.$router.push({
         name: "Register",
         params: {
-          date: arg.dateStr,
+          date: info.date,
         },
       });
-      console.log("カレンダー画面" + arg.dateStr);
     },
     handleEventClick: function (info) {
       this.$router.push({
@@ -60,7 +56,7 @@ export default {
     },
     // スケジュールを取得する
     doFetchAllschedules() {
-      var events = [];
+      var fetchEvents = [];
 
       this.axios
         .get(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
@@ -68,18 +64,19 @@ export default {
           if (response.status != 200) {
             throw new Error("レスポンスエラー");
           } else {
-            var resultschedules = response.data;
-            for (let i = 0; i < resultschedules.length; i++) {
-              var e = resultschedules[i]; // some calendar event
-              events.push({
+            for (let i = 0; i < response.data.length; i++) {
+              var e = response.data[i]; // some calendar event
+              fetchEvents.push({
                 title: e.company,
                 start: e.start_date,
                 end: e.end_date,
               });
-
-              return events;
             }
+            this.calendarOptions.events = fetchEvents;
           }
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },

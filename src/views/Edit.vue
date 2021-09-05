@@ -110,8 +110,6 @@ export default {
       this.scheduleDay = startYear + "-" + startMonth + "-" + startDay;
       this.scheduleStartTime = startHour + ":" + startMinute;
       this.scheduleEndTime = endHour + ":" + endMinute;
-
-      console.log(this.scheduleStartTime);
     }
   },
   methods: {
@@ -142,6 +140,10 @@ export default {
         .then((response) => {
           if (response.status != 200) {
             throw new Error("レスポンスエラー");
+          } else {
+            this.$router.push({
+              name: "Home",
+            });
           }
         });
     },
@@ -156,6 +158,10 @@ export default {
         .then((response) => {
           if (response.status != 200) {
             throw new Error("レスポンスエラー");
+          } else {
+            this.$router.push({
+              name: "Home",
+            });
           }
         });
     },

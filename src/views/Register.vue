@@ -77,17 +77,32 @@ export default {
   computed: {
     // 入力チェック
     validate() {
-      var isEnteredscheduleName = 0 < this.scheduleName.length;
-
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.isEntered = isEnteredscheduleName;
-      return isEnteredscheduleName;
+      if (
+        0 < this.scheduleName.length &&
+        0 < this.scheduleStartTime.length &&
+        0 < this.scheduleEndTime.length
+      ) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.isEntered = true;
+      }
+      return this.isEntered;
     },
   },
   created() {
     // 日付をカレンダーのクリックした日付から受け取る
+
     if (this.$route.params.date != null) {
-      this.scheduleDate = this.$route.params.date.toString();
+      var startDate = this.$route.params.date;
+      // 開始日付取得
+      var startYear = startDate.getFullYear();
+      var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
+      var startDay = ("0" + startDate.getDate()).slice(-2);
+      // 開始時間取得
+      var startHour = ("0" + startDate.getHours()).slice(-2);
+      var startMinute = ("0" + startDate.getMinutes()).slice(-2);
+
+      this.scheduleDay = startYear + "-" + startMonth + "-" + startDay;
+      this.scheduleStartTime = startHour + ":" + startMinute;
     } else {
       var now = new Date();
       var year = now.getFullYear();
@@ -97,9 +112,6 @@ export default {
     }
   },
   methods: {
-    handleDateClick: function (arg) {
-      alert("date click! " + arg.dateStr);
-    },
     // スケジュールを登録する
     doAddschedule() {
       var scheduleSeconds = ":00";
@@ -117,23 +129,23 @@ export default {
         "scheduleEndDate",
         this.scheduleDay + space + this.scheduleEndTime + scheduleSeconds
       );
-      console.log(process.env.VUE_APP_API_ENDPOINT + "/addschedule");
+
       this.axios
         .post(process.env.VUE_APP_API_ENDPOINT + "/addschedule", params)
         .then((response) => {
           if (response.status != 200) {
             throw new Error("レスポンスエラー");
           } else {
-            // 入力値を初期化する
-            this.initInputValue();
+            this.$router.push({
+              name: "Home",
+            });
           }
-        });
-    },
-    // 入力値を初期化する
-    initInputValue() {
-      this.current = -1;
-      this.scheduleName = "";
-      this.scheduleMemo = "";
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };
