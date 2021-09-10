@@ -67,6 +67,7 @@ export default {
             for (let i = 0; i < response.data.length; i++) {
               var e = response.data[i]; // some calendar event
               fetchEvents.push({
+								id: e.id,
                 title: e.company,
                 start: e.start_date,
                 end: e.end_date,

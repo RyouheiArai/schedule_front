@@ -113,9 +113,6 @@ export default {
     }
   },
   methods: {
-    handleDateClick: function (arg) {
-      alert("date click! " + arg.dateStr);
-    },
     // スケジュールを変更する
     doChangeschedule() {
       var scheduleSeconds = ":00";
