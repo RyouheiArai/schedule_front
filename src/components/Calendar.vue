@@ -57,7 +57,7 @@ export default {
     // スケジュールを取得する
     doFetchAllschedules() {
       var fetchEvents = [];
-
+console.log(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
       this.axios
         .get(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
         .then((response) => {
