@@ -24,9 +24,9 @@ export default {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
-        navLinks: true,
-        businessHours: true,
-        editable: true,
+        navLinks: true,//カレンダー内の日付クリックで日表示に遷移するかどう
+        businessHours: true,//休日を表示するかどうか
+        editable: true, //イベントを編集できるかどうか
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
         initialView: "dayGridMonth",
         locale: jaLocale, // 日本語化

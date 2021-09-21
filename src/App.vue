@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>スケジュール管理</h1>
     <div id="nav">
       <router-link to="/">カレンダー画面</router-link> |
       <router-link to="/register">予定登録</router-link>
