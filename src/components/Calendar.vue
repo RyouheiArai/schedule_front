@@ -24,13 +24,13 @@ export default {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
-        navLinks: true,//カレンダー内の日付クリックで日表示に遷移するかどう
-        businessHours: true,//休日を表示するかどうか
+        navLinks: true, //カレンダー内の日付クリックで日表示に遷移するかどう
+        businessHours: true, //休日を表示するかどうか
         editable: true, //イベントを編集できるかどうか
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
         initialView: "dayGridMonth",
         locale: jaLocale, // 日本語化
-        events: this.doFetchAllschedules(),
+        events: this.doFetchAllschedules,
       },
     };
   },
@@ -57,7 +57,7 @@ export default {
     // スケジュールを取得する
     doFetchAllschedules() {
       var fetchEvents = [];
-console.log(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
+      console.log(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules");
       this.axios
         .get(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
         .then((response) => {
@@ -67,7 +67,7 @@ console.log(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
             for (let i = 0; i < response.data.length; i++) {
               var e = response.data[i]; // some calendar event
               fetchEvents.push({
-								id: e.id,
+                id: e.id,
                 title: e.company,
                 start: e.start_date,
                 end: e.end_date,

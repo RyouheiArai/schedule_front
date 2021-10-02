@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">カレンダー画面</router-link> |
-      <router-link to="/register">予定登録</router-link>
+      <router-link to="/register">予定登録</router-link>|
+			<router-link to="/list">予定一覧</router-link>
     </div>
     <router-view />
   </div>
@@ -14,7 +15,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #626c75;
 }
 
 #nav {
@@ -29,4 +30,6 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+
 </style>
