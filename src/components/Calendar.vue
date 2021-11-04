@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import FullCalendar from "@fullcalendar/vue";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import jaLocale from "@fullcalendar/core/locales/ja";
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import jaLocale from '@fullcalendar/core/locales/ja';
 
 export default {
   components: {
@@ -20,15 +20,15 @@ export default {
         eventClick: this.handleEventClick, //スケジュールクリック
         // カレンダーヘッダーのデザイン
         headerToolbar: {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
         },
         navLinks: true, //カレンダー内の日付クリックで日表示に遷移するかどう
         businessHours: true, //休日を表示するかどうか
         editable: true, //イベントを編集できるかどうか
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
-        initialView: "dayGridMonth",
+        initialView: 'dayGridMonth',
         locale: jaLocale, // 日本語化
         events: this.doFetchAllschedules,
       },
@@ -37,7 +37,7 @@ export default {
   methods: {
     handleDateClick: function (info) {
       this.$router.push({
-        name: "Register",
+        name: 'Register',
         params: {
           date: info.date,
         },
@@ -45,7 +45,7 @@ export default {
     },
     handleEventClick: function (info) {
       this.$router.push({
-        name: "Edit",
+        name: 'Edit',
         params: {
           id: info.event.id,
           title: info.event.title,
@@ -56,19 +56,22 @@ export default {
     },
     // スケジュールを取得する
     doFetchAllschedules() {
-      var fetchEvents = [];
-      console.log(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules");
+      let fetchEvents = [];
+   
       this.axios
-        .get(process.env.VUE_APP_API_ENDPOINT + "/fetchAllschedules")
+        .get('/fetchAllschedules')
         .then((response) => {
           if (response.status != 200) {
-            throw new Error("レスポンスエラー");
+            // todo エラーハンドリングする
+            throw new Error('レスポンスエラー');
           } else {
-            for (let i = 0; i < response.data.length; i++) {
-              var e = response.data[i]; // some calendar event
+
+            for (let i = 0; i < response.data.data.length; i++) {
+
+              let e = response.data.data[i]; // some calendar event
               fetchEvents.push({
                 id: e.id,
-                title: e.company,
+                title: e.task,
                 start: e.start_date,
                 end: e.end_date,
               });

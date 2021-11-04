@@ -1,35 +1,18 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">カレンダー画面</router-link> |
-      <router-link to="/register">予定登録</router-link>|
-			<router-link to="/list">予定一覧</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <Header />
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #626c75;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-
-</style>
+<script>
+import Header from './components/Header';
+export default {
+  name: 'App',
+  components: {
+    Header,
+  }
+};
+</script>
