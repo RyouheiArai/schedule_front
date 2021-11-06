@@ -26,7 +26,7 @@
           <v-toolbar
             color="primary"
             dark>
-            <v-toolbar-title>会員登録</v-toolbar-title>
+            <v-toolbar-title>アカウント登録</v-toolbar-title>
           </v-toolbar>
           <v-card>
             <v-form>
@@ -34,7 +34,7 @@
                 <v-text-field
                   v-model="name"
                   type="text"
-                  label="ユーザー名"
+                  label="アカウント名"
                   :error-messages="nameErrors"
                   required
                   @input="$v.name.$touch()"
@@ -112,8 +112,8 @@ export default {
     nameErrors() {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.required && errors.push('ユーザー名を入力してください')
-      !this.$v.name.maxLength && errors.push('ユーザー名は255文字以下で入力してください')
+      !this.$v.name.required && errors.push('アカウント名を入力してください')
+      !this.$v.name.maxLength && errors.push('アカウント名は255文字以下で入力してください')
       return errors
     },
     emailErrors() {

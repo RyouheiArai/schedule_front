@@ -14,7 +14,7 @@
         <v-list-item>
           <v-list-item-content>
             <v-btn to="/userregister" text>
-              ユーザ登録
+              アカウント登録
             </v-btn>
           </v-list-item-content>
         </v-list-item>

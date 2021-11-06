@@ -1,9 +1,18 @@
 <template>
   <v-main>
     <v-container>
-      <v-row class="text-center" align="center" justify="center">
-        <v-col class="mb-4" cols="12" sm="8" md="4">
-          <v-toolbar color="primary" dark>
+      <v-row
+        class="text-center"
+        align="center"
+        justify="center">
+        <v-col
+          class="mb-4"
+          cols="12"
+          sm="8"
+          md="4">
+          <v-toolbar
+            color="primary"
+            dark>
             <v-toolbar-title>ログイン</v-toolbar-title>
           </v-toolbar>
           <v-card>
@@ -16,8 +25,7 @@
                   :error-messages="emailErrors"
                   required
                   @input="$v.email.$touch()"
-                  @blur="$v.email.$touch()"
-                />
+                  @blur="$v.email.$touch()" />
               </v-col>
               <v-col>
                 <v-text-field
@@ -27,21 +35,24 @@
                   :error-messages="passwordErrors"
                   required
                   @input="$v.password.$touch()"
-                  @blur="$v.password.$touch()"
-                />
+                  @blur="$v.password.$touch()" />
               </v-col>
               <v-col>
-                <v-btn color="primary" @click="login">
+                <v-btn
+                  color="primary"
+                  @click="login">
                   ログイン
                 </v-btn>
               </v-col>
               <v-col>
-                <v-btn color="primary" @click="testLogin">
-                  テストユーザーでログイン
+                <v-btn
+                  color="primary"
+                  @click="testLogin">
+                  テストアカウントでログイン
                 </v-btn>
               </v-col>
               <v-col>
-                ユーザ登録は
+                アカウント登録は
                 <router-link to="/userregister">
                   こちら
                 </router-link>
