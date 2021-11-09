@@ -147,7 +147,7 @@ export default {
 
       this.axios
         .post('/addschedule', {
-          schedulesName: this.schedulesName,
+          task: this.schedulesName,
           start_date: this.scheduleDay + SPACE + this.scheduleStartTime + SECONDS,
           end_date: this.scheduleDay + SPACE + this.scheduleEndTime + SECONDS,
         })
