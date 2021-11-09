@@ -24,3 +24,7 @@ pnpm-debug.log*
 .editorconfig
 .firebase
 .firebase/hosting.ZGlzdA.cache
+firebase.json
+.function
+functions
+.firebase/hosting.ZGlzdA.cache
