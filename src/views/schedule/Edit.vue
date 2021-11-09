@@ -19,10 +19,10 @@
             <v-form>
               <v-col>
                 <v-text-field
-                  v-model="task"
+                  v-model="schedulesName"
                   label="予定"
                   type="text"
-                  name="task"
+                  name="schedulesName"
                   :class="{ 'alert-color': !validate }"
                   value
                   placeholder="予定を入力してください※必須" />
@@ -83,7 +83,7 @@ export default {
       // スケジュールID
       schedulesId: 0,
       // スケジュール名
-      task: '',
+      schedulesName: '',
       // 日付
       scheduleDay: '',
       // スケジュール開始時間
@@ -119,7 +119,7 @@ export default {
     },
     // 入力チェック
     validate() {
-      let isEnteredscheduleName = 0 < this.task.length;
+      let isEnteredscheduleName = 0 < this.schedulesName.length;
 
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.isEntered = isEnteredscheduleName;
@@ -144,7 +144,7 @@ export default {
       let endMinute = ('0' + endDate.getMinutes()).slice(-2)
 
       this.schedulesId = parseInt(this.$route.params.id, 10)
-      this.task = this.$route.params.title
+      this.schedulesName = this.$route.params.title
       this.scheduleDay = startYear + '-' + startMonth + '-' + startDay
       this.scheduleStartTime = startHour + ':' + startMinute
       this.scheduleEndTime = endHour + ':' + endMinute
@@ -157,7 +157,7 @@ export default {
       this.axios
         .post('/changeschedule', {
           id: this.schedulesId,
-          tsak: this.task,
+          task: this.schedulesName,
           start_date: this.scheduleDay + SPACE + this.scheduleStartTime + SECONDS,
           end_date: this.scheduleDay + SPACE + this.scheduleEndTime + SECONDS,
         })

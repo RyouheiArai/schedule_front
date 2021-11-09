@@ -19,10 +19,10 @@
             <v-form>
               <v-col>
                 <v-text-field
-                  v-model="task"
+                  v-model="schedulesName"
                   label="予定"
                   type="text"
-                  name="task"
+                  name="schedulesName"
                   :class="{ 'alert-color': !validate }"
                   value
                   placeholder="予定を入力してください※必須" />
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       // スケジュール名
-      task: '',
+      schedulesName: '',
       // 日付
       scheduleDay: '',
       // スケジュール開始時間
@@ -111,7 +111,7 @@ export default {
     },
     // 入力チェック
     validate() {
-      let isEnteredscheduleName = 0 < this.task.length;
+      let isEnteredscheduleName = 0 < this.schedulesName.length;
 
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.isEntered = isEnteredscheduleName;
@@ -147,7 +147,7 @@ export default {
 
       this.axios
         .post('/addschedule', {
-          task: this.task,
+          schedulesName: this.schedulesName,
           start_date: this.scheduleDay + SPACE + this.scheduleStartTime + SECONDS,
           end_date: this.scheduleDay + SPACE + this.scheduleEndTime + SECONDS,
         })
